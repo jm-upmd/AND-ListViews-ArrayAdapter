@@ -178,7 +178,7 @@ public class ListaQuesos {
         return ourInstance;
     }
 
-    private ListaQuesos() {
+    private ListaQuesos() {  // Constructor privado
     }
 
     public String[] getQuesos() {

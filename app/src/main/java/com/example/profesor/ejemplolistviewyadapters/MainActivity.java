@@ -3,9 +3,12 @@ package com.example.profesor.ejemplolistviewyadapters;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,18 +43,31 @@ public class MainActivity extends AppCompatActivity {
         // Enlaza el Adapter a la listview
         listaQuesos.setAdapter(quesoAdapter);
 
-        // Generamos Listeners para recoger el vento de onclick sobre un item de la lista
+        // Generamos Listeners para recoger el vento de click sobre un item de la lista
 
         listaQuesos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Código a ejecutar cuando se produce el evento
+
                 // Generamos un mensaje basado en la posición en el array del item pulsado
                 String mensaje = "Has pulsado QUESOS["+ position +"] --> " + QUESOS[position];
 
                 // Mostramos el mensaje usando un Toast
 
                 Toast.makeText(MainActivity.this, mensaje, Toast.LENGTH_LONG).show();
+
+                // Si fuera necesario también disponemos de la view que representa el item que
+                // hemos pulsado en la lista. Lo tenemos en el parametro view.
+                // Por ejemplo podemos extraer el textview que contiene el nombre del queso de
+                // dicho view (que recordar que es un linear layout)
+
+                TextView tv = (TextView) ((LinearLayout) view).getChildAt(0);
+                mensaje = "** Has pulsado QUESOS["+ position +"] --> " + tv.getText().toString();
+                Toast.makeText(MainActivity.this, mensaje, Toast.LENGTH_LONG).show();
+
+
+
             }
         });
 

@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">ListView</string>
-    <string name="activity_name1">ListView1</string>
-    <string name="activity_name2">ListView2</string>
+    <string name="activity_name1">ListView</string>
+    <string name="activity_name2">ListView Ampliada</string>
+    <string name="activity_name3">ListView Ampliada Dinámica</string>
+
+
 
 
 </resources>

@@ -19,6 +19,15 @@
         </activity>
         <activity
             android:name=".Main2Activity"
+            android:label="@string/activity_name3">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainActivityAmp"
             android:label="@string/activity_name2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

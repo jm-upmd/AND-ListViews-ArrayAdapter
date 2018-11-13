@@ -1,8 +1,8 @@
 package com.example.profesor.ejemplolistviewyadapters;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,14 +12,12 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-
+import android.widget.Toast;
 
 import java.util.Calendar;
-
 import java.util.TimeZone;
 
-public class Main2Activity extends AppCompatActivity {
+public class MainActivityAmp extends AppCompatActivity {
     String[] QUESOS = ListaQuesos.getInstance().getQuesos();
 
 
@@ -39,7 +37,7 @@ public class Main2Activity extends AppCompatActivity {
                 // Se hace el inflate de convertView solo una vez
                 if(convertView == null) {
                     convertView = getLayoutInflater()
-                            .inflate(R.layout.layout_item_queso, null, false);
+                            .inflate(R.layout.layout_item_queso_amp, null, false);
 
                 }
 
@@ -47,32 +45,9 @@ public class Main2Activity extends AppCompatActivity {
                 TextView queso = convertView.findViewById(R.id.nombre_queso_texview);
                 queso.setText(QUESOS[position]);
 
-                // Ahora vamos a añadir de forma programatica otro textview a convertView
-                // con el instante en que se visualiza en el ListView
-
-
-                // Hacemos cast de View a ViewGroup.
-                // Recordar que ViewGroup es subclase de View
-                ViewGroup gv = (ViewGroup)convertView;
-
-                // Si convertView no tiene añadido el segundo textedit con la fecha lo creamos
-                // y se la añadimos
-                if(gv.getChildCount() == 1){
-                    TextView fecha = new TextView(getContext());
-                    fecha.setText(dameAhora());
-                    gv.addView(fecha);
-                    // Cambiamos márgenes del View fecha programáticamente, asignandole el mismo
-                    // margen izquierdo que tiene el view queso
-                    LinearLayout.LayoutParams paramsFecha = (LinearLayout.LayoutParams) fecha.getLayoutParams();
-                    LinearLayout.LayoutParams paramsQueso = (LinearLayout.LayoutParams) queso.getLayoutParams();
-                    paramsFecha.setMarginStart(paramsQueso.getMarginStart());
-                    fecha.setLayoutParams(paramsFecha);
-
-                    Log.d("jmd","AÑADIENDO TEXTVIEW");
-               } else {  // Si ya tiene el textedit de la fecha solo actualizamos su contenido
-                    ((TextView)gv.getChildAt(1)).setText(dameAhora());
-                    Log.d("jmd","REUTILIZANDO TEXTVIEW");
-                }
+                // Y al textview que muestra la fecha, la fecha actual
+                TextView fecha = convertView.findViewById(R.id.fecha);
+                fecha.setText(dameAhora());
 
                 return convertView;
             }
@@ -94,20 +69,23 @@ public class Main2Activity extends AppCompatActivity {
         listaQuesos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                QUESOS[position] = "*** " + QUESOS[position] + " ***";
+                // Generamos un mensaje basado en la posición en el array del item pulsado
+                String mensaje = "Has pulsado QUESOS["+ position +"] --> " + QUESOS[position];
 
-                // Ejecutamos método notifyDataSetChanged() del adapter para que
-                // actualice la ListView con los nuevos valores contenidos en el array.
+                // Mostramos el mensaje usando un Toast
+                Toast.makeText(getApplicationContext(), mensaje, Toast.LENGTH_LONG).show();
 
-                quesoAdapter.notifyDataSetChanged();
+                // Extraemos y mostramos la fecha del item. Como es un dato que no está en
+                // el array, lo cogemos del view directamente
+                TextView tView = view.findViewById(R.id.fecha);
+                mensaje = "La fecha es: " + tView.getText().toString();
+                // También podemos coger el nombre del queso de view en vez de del array
+                tView = view.findViewById(R.id.nombre_queso_texview);
+                mensaje += "\nEl queso es: " +tView.getText().toString();
+                Toast.makeText(getApplicationContext(), mensaje, Toast.LENGTH_LONG).show();
 
 
-                // Forma no correcta de hacerlo manualmente sin uso del adapter
-                // Tras modificar el valor en el array cambiar tb
-                // el la view del item que la lista
 
-                //TextView tv = (TextView) ((ViewGroup) view).getChildAt(0);
-                //tv.setText("*** " + QUESOS[position] + " ***");
 
             }
         });
