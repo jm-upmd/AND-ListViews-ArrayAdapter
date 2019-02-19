@@ -64,11 +64,18 @@ public class ArrayListAdapterActivity extends AppCompatActivity {
                 // Si fuera necesario también disponemos de la view que representa el item que
                 // hemos pulsado en la lista. Lo tenemos en el parametro view.
                 // Por ejemplo podemos extraer el textview que contiene el nombre del queso de
-                // dicho view (que recordar que es un linear layout)
+                // a través de dicho view
 
-                TextView tv = (TextView) ((LinearLayout) view).getChildAt(0);
+
+                TextView tv = view.findViewById(R.id.nombre_queso_texview);
                 mensaje = "** Has pulsado QUESOS["+ position +"] --> " + tv.getText().toString();
                 Toast.makeText(ArrayListAdapterActivity.this, mensaje, Toast.LENGTH_LONG).show();
+
+                // Otra forma alternativa de extraer el texview de dentro de su groupView contenedor.
+                // La view es en realidad un groupView, que es el LinearLayout que representa
+                // el item en la lista y que contiene el TextView dentro de él como view hija.
+
+                //tv = (TextView) ((LinearLayout) view).getChildAt(0);
 
 
 
